@@ -1,153 +1,83 @@
-# Assignment-1 — Learn Probability Density Functions using Roll-Number-Parameterized Non-Linear Model
+# Assignment-1 — Learn Probability Density Functions (Roll-Number-Parameterized Non-Linear Model)
 
 **Student:** Rohan Malhotra  
 **Roll Number (r):** 102303437  
 
----
+This repository contains the complete solution for Assignment-1:
 
-## Objective
-This repository solves **Assignment-1**, where we:
-
-1. Use **NO2** values from the Kaggle India Air Quality dataset as feature **x**  
-2. Transform each x into z using a roll-number-based non-linear transformation  
-3. Estimate parameters **λ, μ, c** of the probability density function:
-
-\[
-\hat{p}(z)=c\,e^{-\lambda(z-\mu)^2}
-\]
+1. Download the Kaggle India Air Quality dataset  
+2. Extract NO2 as feature (x)  
+3. Transform x → z using the roll-number parameterized function  
+4. Learn parameters λ, μ and c for the given PDF  
 
 ---
 
 ## Dataset
-Kaggle Dataset: **India Air Quality Data**  
+Kaggle Dataset Link:  
 https://www.kaggle.com/datasets/shrutibhargava94/india-air-quality-data  
 
-This solution downloads the dataset automatically using:
-
-```python
-import kagglehub
-path = kagglehub.dataset_download("shrutibhargava94/india-air-quality-data")
-```
+Feature used: **NO2**
 
 ---
 
-## Step 1 — Transformation (x → z)
+## Step-1: Transformation
 
-\[
-z = T_r(x) = x + a_r \sin(b_r x)
-\]
+Transformation function:
 
-Where:
+z = Tr(x) = x + ar * sin(br * x)
 
-\[
-a_r = 0.05 \cdot (r \bmod 7), \quad b_r = 0.3 \cdot ((r \bmod 5)+1)
-\]
+where:
 
-For **r = 102303437**:
+ar = 0.05 * (r mod 7)  
+br = 0.3 * ((r mod 5) + 1)
 
-- \(r \bmod 7 = 5 \Rightarrow a_r = 0.25\)
-- \(r \bmod 5 = 2 \Rightarrow b_r = 0.9\)
+For roll number r = 102303437:
+
+- r mod 7 = 5  →  ar = 0.25
+- r mod 5 = 2  →  br = 0.9
 
 So:
 
-\[
-z = x + 0.25\sin(0.9x)
-\]
+z = x + 0.25 * sin(0.9 * x)
 
 ---
 
-## Step 2 — Parameter Estimation (λ, μ, c)
+## Step-2: PDF Parameter Learning
 
-We estimate the parameters using **Maximum Likelihood Estimation (MLE)** assuming a valid probability density function.
+We estimate parameters for:
 
-For a normalized PDF:
-
-\[
-\int_{-\infty}^{\infty} c e^{-\lambda(z-\mu)^2}\,dz = 1
-\Rightarrow c = \sqrt{\frac{\lambda}{\pi}}
-\]
+p̂(z) = c * exp( -λ * (z - μ)² )
 
 ---
 
-## Final Estimated Parameters
+## Histogram of Z and fitted curves 
+<img width="786" height="470" alt="Unknown" src="https://github.com/user-attachments/assets/f57f1242-9776-4173-a92f-0705ffe4664b" />
 
-### ✅ Normalized MLE (Recommended for Submission)
-These are the values to submit in the Google Form:
 
-- **λ (Lambda)** = `0.0014590905`
-- **μ (Mean)**   = `25.8027083605`
-- **c**          = `0.0215509383`
+---
+## Final Estimated Parameters (Computed)
+
+### Normalized MLE (Recommended)
+- λ (lambda) = 0.0014590905  
+- μ (mean)   = 25.8027083605  
+- c          = 0.0215509383  
+
+### Histogram Curve-Fit
+- λ (lambda) = 0.0021884980  
+- μ (mean)   = 20.3521973452  
+- c          = 0.0272193072  
 
 ---
 
-### Optional: Histogram Curve Fit (Extra)
-This version fits the function directly to the histogram density:
-
-- **λ (Lambda)** = `0.0021884980`
-- **μ (Mean)**   = `20.3521973452`
-- **c**          = `0.0272193072`
-
----
-
-## What to Submit
-The submission form asks:
-
-- **Estimated value of Lambda** → submit **Normalized MLE λ**
-- **Estimated value of the mean** → submit **Normalized MLE μ**
-
-So submit:
-
-✅ **λ = 0.0014590905**  
-✅ **μ = 25.8027083605**
-
----
-
-## Results Visualization (Images)
-
-### Density Fit Plot
-![Density Fit](images/density_fit.png)
-
----
-
-## Repository Structure
-```
-assignment1_rohan_malhotra/
-│── assignment1_solution.ipynb
-│── src/
-│   └── solve.py
-│── requirements.txt
-│── results.json   (generated after running)
-│── images/
-│   └── density_fit.png
-```
-
----
-
-## How to Run
-
-### Run Notebook
+## How to Run (Notebook)
 Open and run:
 
-- `assignment1_solution.ipynb`
+- `assignment1_solution_kagglehub.ipynb`
 
-### Run Script
+---
+
+## How to Run (Script)
+
 ```bash
-pip install -r requirements.txt
-python src/solve.py
-```
-
----
-
-## Output
-The program prints:
-- \(a_r, b_r\)
-- estimated \(λ, μ, c\)
-- number of data points used
-
-And saves results into:
-- `results.json`
-
----
-
-## Submission Link
-https://forms.gle/jYF3MDKozRnSCHvR8
+python -m pip install -r requirements.txt
+python src/solve_kagglehub.py
