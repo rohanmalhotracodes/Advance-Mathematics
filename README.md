@@ -57,7 +57,7 @@ p̂(z) = c * exp( -λ * (z - μ)² )
 ---
 ## Final Estimated Parameters (Computed)
 
-### Normalized MLE (Recommended)
+### Normalized MLE
 - λ (lambda) = 0.0014590905  
 - μ (mean)   = 25.8027083605  
 - c          = 0.0215509383  
